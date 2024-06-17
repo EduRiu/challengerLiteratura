@@ -2,7 +2,7 @@ package conexion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Conversion implements IConvierteDatosGenericos{
+public class ConversionDatos implements IConvierteDatosGenericos{
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
