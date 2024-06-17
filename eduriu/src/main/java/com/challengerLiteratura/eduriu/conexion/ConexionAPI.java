@@ -1,4 +1,4 @@
-package conexion;
+package com.challengerLiteratura.eduriu.conexion;
 
 import java.io.IOException;
 import java.net.URI;

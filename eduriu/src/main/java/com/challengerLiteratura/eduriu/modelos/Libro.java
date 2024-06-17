@@ -1,33 +1,28 @@
-package modelos;
-
+package com.challengerLiteratura.eduriu.modelos;
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
 
 @Entity
 @Table(name = "libros")
 public class Libro {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     @Column(unique = true)
     private String titulo;
     @ManyToOne
-    private List<AutorDatos> autores;
-    private List<String> idioma;
+    private Autor autores;
+    private String idioma;
     private Integer numeroDescargas;
-
 
     public Libro() {
     }
 
-    public Libro(String titulo, List<AutorDatos> autores, List<String> idioma, Integer numeroDescargas) {
-        this.titulo = titulo;
-        this.autores = autores;
-        this.idioma = idioma;
-        this.numeroDescargas = numeroDescargas;
+    public Libro(LibroDatos libroDatos, Autor autor){
+        this.titulo = libroDatos.titulo();
+        this.autores = autor;
+        this.idioma = libroDatos.idioma().get(0);
+        this.numeroDescargas = libroDatos.numeroDescargas();
     }
 
     public Long getId() {
@@ -46,19 +41,19 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public List<AutorDatos> getAutor() {
+    public Autor getAutores() {
         return autores;
     }
 
-    public void setAutor(List<AutorDatos> autor) {
-        this.autores = autor;
+    public void setAutores(Autor autores) {
+        this.autores = autores;
     }
 
-    public List<String> getIdioma() {
+    public String getIdioma() {
         return idioma;
     }
 
-    public void setIdioma(List<String> idioma) {
+    public void setIdioma(String idioma) {
         this.idioma = idioma;
     }
 
@@ -76,7 +71,7 @@ public class Libro {
                 "Id=" + Id +
                 ", titulo='" + titulo + '\'' +
                 ", autores=" + autores +
-                ", idioma=" + idioma +
+                ", idioma='" + idioma + '\'' +
                 ", numeroDescargas=" + numeroDescargas +
                 '}';
     }

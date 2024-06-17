@@ -1,12 +1,12 @@
-package servicios;
+package com.challengerLiteratura.eduriu.servicios;
 
-import conexion.ConexionAPI;
-import conexion.ConversionDatos;
-import modelos.*;
+import com.challengerLiteratura.eduriu.modelos.*;
+import com.challengerLiteratura.eduriu.repositorio.LibroRespositorio;
+import com.challengerLiteratura.eduriu.conexion.ConexionAPI;
+import com.challengerLiteratura.eduriu.conexion.ConversionDatos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositorio.AutorRepositorio;
-import repositorio.LibroRespositorio;
+import com.challengerLiteratura.eduriu.repositorio.AutorRepositorio;
 
 import java.util.Optional;
 
@@ -14,9 +14,9 @@ import java.util.Optional;
 public class LibroServicio {
 
     @Autowired
-    private LibroRespositorio libroRespositorio;
+    LibroRespositorio libroRespositorio;
     @Autowired
-    private AutorRepositorio autorRepositorio;
+    AutorRepositorio autorRepositorio;
 
     private ConexionAPI conexionAPI = new ConexionAPI();
     private ConversionDatos conversionDatos = new ConversionDatos();
@@ -27,10 +27,8 @@ public class LibroServicio {
 
         var json = conexionAPI.consumoAPI(url + "?search=" + libro.replace(" ", "%20"));
 
-/*
         System.out.println(url + "?search=" + libro.replace(" ", "%20"));
         System.out.println("JSON" + json);
-*/
 
         var libroBuscado = conversionDatos.consumoAPI(json, LibroDatosGenerales.class);
 
@@ -40,33 +38,30 @@ public class LibroServicio {
                 .filter(l -> l.titulo().toLowerCase().contains(libro.toLowerCase()))
                 .findFirst();
 
-        /*       System.out.println(libroEncontrado);*/
+               System.out.println(libroEncontrado);
 
         if (libroEncontrado.isPresent()) {
             LibroDatos serial = libroEncontrado.get();
 
-            Libro libroParaGuardar = new Libro();
+            Autor autor = obtenerAutor(serial);
+            System.out.println(autor);
 
-            libroParaGuardar.setTitulo(serial.titulo());
-            libroParaGuardar.setAutor(serial.autores());
-            libroParaGuardar.setIdioma(serial.idioma());
-            libroParaGuardar.setNumeroDescargas(serial.numeroDescargas());
+            Libro libroParaCargar = new Libro(serial,autor );
+            System.out.println(libroParaCargar);
 
-            Autor autorParaGuardar = new Autor().obtenerAutor(serial);
-
-            System.out.println(libroParaGuardar);
-            System.out.println(autorParaGuardar);
-
-            libroRespositorio.save(libroParaGuardar);
-            autorRepositorio.save(autorParaGuardar);
-
+            libroRespositorio.save(libroParaCargar);
+            autorRepositorio.save(autor);
 
             System.out.println("libro cargado");
         } else {
             System.out.println("libro no encontrado");
         }
-    }
 
+    }
+    public Autor obtenerAutor(LibroDatos libroDatos){
+        AutorDatos autorDatos = libroDatos.autores().get(0);
+        return new Autor(autorDatos);
+    }
 
 
 }

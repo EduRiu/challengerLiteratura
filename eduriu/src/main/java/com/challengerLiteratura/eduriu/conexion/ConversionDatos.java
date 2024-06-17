@@ -1,4 +1,4 @@
-package conexion;
+package com.challengerLiteratura.eduriu.conexion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -1,4 +1,4 @@
-package modelos;
+package com.challengerLiteratura.eduriu.modelos;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
