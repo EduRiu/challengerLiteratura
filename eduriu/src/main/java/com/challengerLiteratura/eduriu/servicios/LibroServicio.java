@@ -48,12 +48,14 @@ public class LibroServicio {
                        0- SALIR
                     """);
             opcion = teclado.nextInt();
+            teclado.nextLine();
             System.out.println(opcion);
 
             switch (opcion) {
                 case 1:
                     System.out.println("Ingrese el título del libro:");
-                    String titulo = teclado.next();
+                    String titulo = teclado.nextLine();
+                    System.out.println("palabra ingresada " + titulo);
                     busquedaLibro(titulo);
                     break;
                 case 2:
@@ -92,7 +94,7 @@ public class LibroServicio {
 
     public void busquedaLibro(String libro) {
 
-        var json = conexionAPI.consumoAPI(url + "?search=" + libro.replace("  ", "%20"));
+        var json = conexionAPI.consumoAPI(url + "?search=" + libro.replace(" ", "%20"));
 
         System.out.println(url + "?search=" + libro.replace(" ", "%20"));
         System.out.println("JSON" + json);
