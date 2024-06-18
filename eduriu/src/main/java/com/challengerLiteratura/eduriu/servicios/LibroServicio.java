@@ -69,6 +69,12 @@ public class LibroServicio {
                     break;
                 case 5:
                     System.out.println("Ingrese el idioma:");
+                    System.out.println("""
+                            es - español
+                            en - ingles
+                            fr - frances
+                            fi - filipino
+                              """);
                     String idioma = teclado.next();
                     listarLibrosPorIdioma(idioma);
                     break;
